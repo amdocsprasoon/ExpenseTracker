@@ -1,0 +1,30 @@
+package org.sebprojects.expensetracker.entities;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.time.LocalDate;
+
+@Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class RefreshTokens {
+
+    @Id
+    @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
+    Long tokenId;
+    String token;
+    LocalDate expiryDate;
+
+
+    @OneToOne
+    @JoinColumn(name = "user_id") // Foreign key column in RefreshTokens table
+    private UserInfo userInfo;
+
+
+
+
+}
