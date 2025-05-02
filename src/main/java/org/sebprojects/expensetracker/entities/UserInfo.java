@@ -2,6 +2,7 @@ package org.sebprojects.expensetracker.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +12,7 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class UserInfo {
 
     @Id
@@ -20,7 +22,7 @@ public class UserInfo {
     String password;
 
     @OneToOne(mappedBy = "userInfo") // Reference back from RefreshTokens
-    private RefreshTokens refreshToken;
+    private RefreshToken refreshToken;
 
     @ManyToMany
     @JoinTable(
