@@ -21,9 +21,12 @@ public class SignUpService {
     @Autowired
     PasswordEncoder passwordEncoder;
 
+    @Autowired
+    RefeshTokenService refeshTokenService;
+
     // Example method to register a new user
-    public void registerUser(UserInfoDto userInfoDto) {
-        if( !userRepository.existsByUserName(userInfoDto.getUsername()))
+    public UserInfoDto registerUser(UserInfoDto userInfoDto) {
+        if(userRepository.existsByUserName(userInfoDto.getUsername()))
         {
             throw new RuntimeException("User already exists");
         }
@@ -35,11 +38,24 @@ public class SignUpService {
                 .build();
 
         // Logic to save user data
-        userRepository.save(userInfo);
+        UserInfo userInfo1 =  userRepository.save(userInfo);
+
+        return UserInfoDto.builder()
+                .username(userInfo1.getUserName())
+                .password("Can't be shown")
+                .build();
+
+
 
 
 
     }
+
+    public boolean isUserNameAvailable(String userName) {
+        return userRepository.existsByUserName(userName);
+    }
+
+
 
     // Example method to send confirmation email
     public void sendConfirmationEmail(String email) {

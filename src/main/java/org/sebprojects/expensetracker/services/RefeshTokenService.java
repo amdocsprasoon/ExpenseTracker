@@ -24,11 +24,14 @@ public class RefeshTokenService {
     public RefreshToken createRefreshToken (String userName) {
         UserInfo user = userRepository.findByUserName(userName).orElseThrow(() -> new RuntimeException("User Not Found"));
 
-        return RefreshToken.builder()
+        RefreshToken refreshToken = RefreshToken.builder()
                 .userInfo(user)
                 .token(UUID.randomUUID().toString())
                 .expiryDate(LocalDate.now().plusDays(30))
                 .build();
+
+        RefreshToken savedRefreshToken = refreshTokenRepository.save(refreshToken);
+        return  savedRefreshToken ;
     }
 
     public boolean verifyExpiration(RefreshToken refreshToken) {

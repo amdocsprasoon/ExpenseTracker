@@ -15,7 +15,7 @@ import java.util.Map;
 public class JwtService {
 
 
-    private static final String SECRET_KEY = "your-256-bit-secret-your-256-bit-secret"; // Use a secure key
+    private static final String SECRET_KEY = "damdaar_key_hai_bhai_mere_bahut_strong_hai_bhai"; // Use a secure key
     private static final long EXPIRATION_TIME = 1000 * 60 * 60 * 10; // 10 hours
 
 
