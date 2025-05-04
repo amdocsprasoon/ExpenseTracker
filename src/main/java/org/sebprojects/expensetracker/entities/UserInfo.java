@@ -24,12 +24,21 @@ public class UserInfo {
     @OneToOne(mappedBy = "userInfo") // Reference back from RefreshTokens
     private RefreshToken refreshToken;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER) // Change fetch type to EAGER
     @JoinTable(
             name = "user_roles", // Name of the join table
             joinColumns = @JoinColumn(name = "user_id"), // Foreign key in join table for UserInfo
             inverseJoinColumns = @JoinColumn(name = "role_id") // Foreign key in join table for Roles
     )
     private Set<Roles> roles;
+
+    @Override
+    public String toString() {
+        return "UserInfo{" +
+                "id=" + userId +
+                ", userName='" + userName + '\'' +
+                ", password='[PROTECTED]'" + // Avoid printing sensitive data
+                '}';
+    }
 
 }

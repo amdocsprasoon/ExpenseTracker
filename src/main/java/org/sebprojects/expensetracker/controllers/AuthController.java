@@ -55,9 +55,9 @@ public class AuthController {
         return "Hello, World!";
     }
 
-    @GetMapping("/hello2")
+    @GetMapping("/test_auth")
     public String helloWorld2() {
-        return "Hello, World 2!";
+        return "JWT Token is working, Wolla?";
     }
 
 

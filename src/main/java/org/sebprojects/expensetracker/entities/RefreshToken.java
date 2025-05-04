@@ -26,7 +26,12 @@ public class RefreshToken {
     @JoinColumn(name = "user_id") // Foreign key column in RefreshTokens table
     private UserInfo userInfo;
 
-
-
-
+    @Override
+    public String toString() {
+        return "RefreshToken{" +
+                "tokenId=" + tokenId +
+                ", token='" + token + '\'' +
+                ", expiryDate=" + expiryDate +
+                '}';
+    }
 }

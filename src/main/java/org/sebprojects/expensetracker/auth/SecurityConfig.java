@@ -1,6 +1,7 @@
 package org.sebprojects.expensetracker.auth;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -10,11 +11,16 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 
 @Configuration
 //@EnableWebSecurity
 public class SecurityConfig {
+
+    @Autowired
+    private JwtAuthenticationFilter jwtAuthenticationFilter;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -22,9 +28,10 @@ public class SecurityConfig {
                 .cors(cors->cors.disable())// Disable CSRF
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/v1/signup", "/api/v1/login", "/api/v1/hello").permitAll() // Allow signup and login endpoints
+//                        .requestMatchers("/api/v1/test_auth").hasRole("ADMIN") // Allow only ADMIN role for this endpoint
                         .anyRequest().authenticated() // Require authentication for other endpoints
                 )
-                .httpBasic(Customizer.withDefaults()); // Use basic authentication (optional, can be replaced with JWT or other mechanisms)
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }

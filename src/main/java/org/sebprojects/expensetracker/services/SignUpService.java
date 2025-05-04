@@ -1,13 +1,17 @@
 package org.sebprojects.expensetracker.services;
 
 import org.sebprojects.expensetracker.dtos.UserInfoDto;
+import org.sebprojects.expensetracker.entities.Roles;
 import org.sebprojects.expensetracker.entities.UserInfo;
+import org.sebprojects.expensetracker.repos.RolesRepository;
 import org.sebprojects.expensetracker.repos.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class SignUpService {
@@ -17,6 +21,9 @@ public class SignUpService {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    RolesRepository rolesRepository;
 
     @Autowired
     PasswordEncoder passwordEncoder;
@@ -31,10 +38,20 @@ public class SignUpService {
             throw new RuntimeException("User already exists");
         }
 
+        // Fetch the ROLE_USER from the database
+        Optional<Roles> roleUser = rolesRepository.findByRoleName("ROLE_USER");
+        if (roleUser.isEmpty()) {
+            throw new RuntimeException("Default role ROLE_USER not found in the database");
+        }
+
+        // Assign ROLE_USER to the new user
+        Set<Roles> roles = new HashSet<>();
+        roles.add(roleUser.get());
+
         UserInfo userInfo = UserInfo.builder()
                 .userName(userInfoDto.getUsername())
                 .password(passwordEncoder.encode(userInfoDto.getPassword()))
-                .roles(new HashSet<>())  //no roles assigned yet
+                .roles(roles)  //no roles assigned yet
                 .build();
 
         // Logic to save user data
@@ -43,6 +60,7 @@ public class SignUpService {
         return UserInfoDto.builder()
                 .username(userInfo1.getUserName())
                 .password("Can't be shown")
+                .roles(userInfo1.getRoles())
                 .build();
 
 

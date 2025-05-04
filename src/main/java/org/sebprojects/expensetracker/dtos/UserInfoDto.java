@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.sebprojects.expensetracker.entities.Roles;
 
 import java.util.Set;
 
@@ -17,6 +18,6 @@ public class UserInfoDto  {
     private String username;
     private String email;
     private String password;
-    private Set<String> roles;
+    private Set<Roles> roles;
 
 }

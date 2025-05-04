@@ -1,5 +1,6 @@
 package org.sebprojects.expensetracker.services;
 
+import lombok.Data;
 import org.sebprojects.expensetracker.entities.Roles;
 import org.sebprojects.expensetracker.entities.UserInfo;
 import org.springframework.security.core.GrantedAuthority;
@@ -10,14 +11,15 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class CustomUserDetails extends UserInfo implements UserDetails {
-    private String username;
-    private String password;
+@Data
+public class CustomUserDetails implements UserDetails {
+    String userName;
+    String password;
 
     Collection<? extends GrantedAuthority > authorities;
 
     public CustomUserDetails(UserInfo userInfo) {
-        this.username = userInfo.getUserName();
+        this.userName = userInfo.getUserName();
         this.password = userInfo.getPassword();
 
         List<GrantedAuthority> auths = new ArrayList<>();
@@ -37,7 +39,7 @@ public class CustomUserDetails extends UserInfo implements UserDetails {
 
     @Override
     public String getUsername() {
-        return username;
+        return userName;
     }
 
     @Override
@@ -64,4 +66,6 @@ public class CustomUserDetails extends UserInfo implements UserDetails {
     public boolean isEnabled() {
         return UserDetails.super.isEnabled();
     }
+
+
 }

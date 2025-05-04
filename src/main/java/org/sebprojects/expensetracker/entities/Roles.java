@@ -14,11 +14,19 @@ import java.util.Set;
 public class Roles {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long roleId;
     String roleName;
 
     @ManyToMany(mappedBy = "roles") // Reference back to UserInfo
     private Set<UserInfo> users;
+
+    @Override
+    public String toString() {
+        return "Roles{" +
+                "id=" + roleId +
+                ", roleName='" + roleName + '\'' +
+                '}';
+    }
 
 }
