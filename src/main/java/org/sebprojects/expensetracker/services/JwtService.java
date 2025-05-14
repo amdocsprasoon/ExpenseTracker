@@ -14,10 +14,8 @@ import java.util.Map;
 @Service
 public class JwtService {
 
-
     private static final String SECRET_KEY = "damdaar_key_hai_bhai_mere_bahut_strong_hai_bhai"; // Use a secure key
     private static final long EXPIRATION_TIME = 1000 * 60 * 60 * 10; // 10 hours
-
 
     // In this we are getting the signing key generated from the SECRET_KEY, if the SECRET_KEY is same, it will generate same signing key,
     // so we can use the same signing key to validate the JWT token
@@ -38,11 +36,6 @@ public class JwtService {
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
-
-//    private String createToken(Map<String, Object> claims, String subject) {
-//
-//    }
-
     // Below are the steps to validate the JWT token
 
     // Step 1 - It will extract all the claims by verifying using Signing Key
@@ -54,24 +47,6 @@ public class JwtService {
                 .parseClaimsJws(token)
                 .getBody();
     }
-
-    // Step 2
-
-    // Extract a Specific Claim, it's a generic class that is helpful to extract the claim that you want
-//    public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
-//        final Claims claims = extractAllClaims(token);
-//        return claimsResolver.apply(claims);
-//    }
-//
-//    // Extract Username from Token
-//    public String extractUsername(String token) {
-//        return extractClaim(token, Claims::getSubject);
-//    }
-
-//        private Date extractExpiration(String token) {
-//            return extractClaim(token, Claims::getExpiration);
-//        }
-
 
     public String extractUsername(String token) {
         return extractAllClaims(token).getSubject();

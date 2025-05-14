@@ -63,10 +63,6 @@ public class SignUpService {
                 .roles(userInfo1.getRoles())
                 .build();
 
-
-
-
-
     }
 
     public boolean isUserNameAvailable(String userName) {
