@@ -3,6 +3,7 @@ package org.sebprojects.expensetracker.entities;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.util.Set;
@@ -11,6 +12,7 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(exclude = "users") // Exclude user to prevent cyclic dependency
 public class Roles {
 
     @Id

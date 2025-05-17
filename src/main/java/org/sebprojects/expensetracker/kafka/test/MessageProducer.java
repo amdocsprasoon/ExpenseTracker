@@ -1,4 +1,4 @@
-package org.sebprojects.expensetracker.kafka;
+package org.sebprojects.expensetracker.kafka.test;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -12,12 +12,12 @@ public class MessageProducer {
     // Add your KafkaTemplate and other dependencies here
 
     @Autowired
-    private KafkaTemplate<String, String> kafkaTemplate;
+    private KafkaTemplate<String, String> kafkaTemplateTest;
 
     // Example method to send a message
     public void sendMessage(String topic, String message) {
         // Use KafkaTemplate to send the message to the specified topic
-         kafkaTemplate.send(topic, message);
+         kafkaTemplateTest.send(topic, message);
     }
 
     // Add more methods as needed for different use cases

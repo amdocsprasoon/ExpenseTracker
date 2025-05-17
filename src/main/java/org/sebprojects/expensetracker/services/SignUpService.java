@@ -3,6 +3,7 @@ package org.sebprojects.expensetracker.services;
 import org.sebprojects.expensetracker.dtos.UserInfoDto;
 import org.sebprojects.expensetracker.entities.Roles;
 import org.sebprojects.expensetracker.entities.UserInfo;
+import org.sebprojects.expensetracker.kafka.UserInfoDtoProducer;
 import org.sebprojects.expensetracker.repos.RolesRepository;
 import org.sebprojects.expensetracker.repos.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,9 @@ public class SignUpService {
     @Autowired
     RefeshTokenService refeshTokenService;
 
+    @Autowired
+    UserInfoDtoProducer userInfoDtoProducer;
+
     // Example method to register a new user
     public UserInfoDto registerUser(UserInfoDto userInfoDto) {
         if(userRepository.existsByUserName(userInfoDto.getUsername()))
@@ -46,7 +50,10 @@ public class SignUpService {
 
         // Assign ROLE_USER to the new user
         Set<Roles> roles = new HashSet<>();
+        System.out.println("Role User: " + roleUser.get());
         roles.add(roleUser.get());
+
+        System.out.println(roles);
 
         UserInfo userInfo = UserInfo.builder()
                 .userName(userInfoDto.getUsername())
@@ -56,6 +63,9 @@ public class SignUpService {
 
         // Logic to save user data
         UserInfo userInfo1 =  userRepository.save(userInfo);
+
+        // Logic to send kafka message
+         userInfoDtoProducer.sendUserInfoDtoEvent("user_info_topic", userInfoDto);
 
         return UserInfoDto.builder()
                 .username(userInfo1.getUserName())

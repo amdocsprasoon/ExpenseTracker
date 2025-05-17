@@ -1,4 +1,4 @@
-package org.sebprojects.expensetracker.kafka;
+package org.sebprojects.expensetracker.kafka.test;
 
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
