@@ -1,6 +1,7 @@
 package org.sebprojects.expensetracker.dtos;
 
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,13 +17,20 @@ import java.util.Set;
 @Builder
 public class UserInfoDto  {
 
+
+    private Long userId;
+
     private String username;
+
 
     private String email;
 
+
     private String firstName;
 
+
     private String lastName;
+
 
     private String phoneNumber;
 

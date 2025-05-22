@@ -12,6 +12,9 @@ public class UserInfoDtoConsumer {
      public void consumeUserInfoDto(UserInfoDto userInfoDto) {
          System.out.println("Received UserInfoDto: " + userInfoDto);
          // Process the UserInfoDto as needed
+
+
+
      }
 
 }

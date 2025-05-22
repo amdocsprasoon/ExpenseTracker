@@ -64,15 +64,24 @@ public class SignUpService {
         // Logic to save user data
         UserInfo userInfo1 =  userRepository.save(userInfo);
 
-        // Logic to send kafka message
-         userInfoDtoProducer.sendUserInfoDtoEvent("user_info_topic", userInfoDto);
+//        userInfoDtoProducer.sendUserInfoDtoEvent("user_info_topic", userInfoDto);
 
-        return UserInfoDto.builder()
+        //we don't want to share the password in the response and the in the event
+        UserInfoDto userInfoDtoReturned = UserInfoDto.builder()
                 .username(userInfo1.getUserName())
                 .password("Can't be shown")
-                .roles(userInfo1.getRoles())
+                .email(userInfoDto.getEmail())
+                .firstName(userInfoDto.getFirstName())
+                .lastName(userInfoDto.getLastName())
+                .phoneNumber(userInfoDto.getPhoneNumber())
+                .userId(userInfo1.getUserId())
+//                .roles(userInfo1.getRoles())   We can't share into the kafka, as kafka not able to serialize the roles
                 .build();
 
+        // Logic to send kafka message
+        userInfoDtoProducer.sendUserInfoDtoEvent("user_info_topic", userInfoDtoReturned);
+
+        return userInfoDtoReturned;
     }
 
     public boolean isUserNameAvailable(String userName) {
