@@ -27,7 +27,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .cors(cors->cors.disable())// Disable CSRF
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/v1/signup", "/api/v1/login", "/api/v1/hello", "test-kafka").permitAll() // Allow signup and login endpoints
+                        .requestMatchers("/api/auth/v1/signup", "/api/auth/v1/login", "/api/auth/v1/hello", "test-kafka").permitAll() // Allow signup and login endpoints
 //                        .requestMatchers("/api/v1/test_auth").hasRole("ADMIN") // Allow only ADMIN role for this endpoint
                         .anyRequest().authenticated() // Require authentication for other endpoints
                 )
